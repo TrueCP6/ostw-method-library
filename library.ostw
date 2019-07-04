@@ -1,0 +1,195 @@
+method IsAI(player) //by deltin
+{
+	define currentHero = HeroOf(player);
+	define heroSwap = HeroVar(Hero.Ana);
+	define isAI;
+
+	if (currentHero == HeroVar(Hero.Ana))
+	{
+		heroSwap = HeroVar(Hero.Bastion);
+	}
+
+	ForcePlayerHero(player, heroSwap);
+	if (HeroOf(player) == currentHero)
+	{
+		isAI = true;
+	}
+	else
+	{
+		isAI = false;
+	}
+	ForcePlayerHero(player, currentHero);
+	StopForcingHero(player);
+	
+	return isAI;
+}
+
+method Pi()
+{
+    return 3.146;
+}
+
+method SphereHitbox(player, spherePosition, sphereRadius)
+{
+	return DistanceBetween(spherePosition, EyeCastPosition(player, DistanceBetween(EyePosition(player), spherePosition))) <= sphereRadius;
+}
+
+method EyeCastPosition(player, range)
+{
+	return RayCastHitPosition(EyePosition(player), EyePosition(player) + FacingDirection(player) * range);
+}
+
+method Midpoint(point1, point2)
+{
+	return (point1 + point2) / 2;
+}
+
+method SumOfArray(arrayToSum)
+{
+	define total = 0;
+	foreach (define value in arrayToSum)
+	{
+		total += arrayToSum[value];
+	}
+	return total;
+}
+
+method AverageOfArray(arrayToAverage)
+{
+	return SumOfArray(arrayToAverage) / CountOf(arrayToAverage);
+}
+
+//returns angle a sphere will take up in field of view
+method FOVTakenUpBySphere(distanceToSphereCenter, sphereRadius)
+{
+	return 2 * ArcsineToDegrees(sphereRadius / distanceToSphere);
+}
+
+//returns distance as if both points were on the same y level
+method HorizontalDistance(point1, point2)
+{
+	return Sqrt((XOf(point1) - XOf(point2)) ^ 2 + (ZOf(point1) - ZOf(point2)) ^ 2);
+}
+
+//fraction should be fraction of distance along straight line between points e.g 1/2 will give the midpoint between the points and 1/10 will return the point one tenth of the way along a straight line drawn between them
+method LinearInterpolate(point1, point2, fraction)
+{
+	return point1*(1-fraction) + point2*fraction;
+}
+
+//same as linear interpolate, but instead returns a point a certain distance along a straight line drawn between the 2 points 
+method LinearInterpolateDistance(point1, point2, distance)
+{
+	return LinearInterpolate(point1, point1, distance / DistanceBetween(point1, point2));
+}
+
+//returns hypotenuse length
+method Pythag(side1, side2)
+{
+	return Sqrt(side1^2 + side2^2);
+}
+
+//returns side2 length
+method Pythag(side1, hypotenuse)
+{
+	return Sqrt(hypotenuse^2 - side1^2);
+}
+
+method ToKPH(metersPerSecond) { return metersPerSecond * 3.6; }
+
+//convert to americanese units
+method ToMPH(metersPerSecond) { return metersPerSecond * 2.237; }
+method ToFt(meters) { return meters * 2.381; }
+method ToYards(meters) { return meters * 1.094; }
+method ToInches(meters) { return meters * 39.37; }
+
+method TallnessOfPlayer(player)
+{
+	return YOf(EyePosition(player)) - YOf(PositionOf(player));
+}
+
+method IsOnScreen(player, point, fovOfPlayer)
+{
+	return (
+		IsInLineOfSight(EyePosition(player), point) &
+		IsInViewAngle(player, point, fovOfPlayer / 2)
+	);
+}
+
+method SetHealth(player, health)
+{
+	if (Health(player) < health) {
+		Heal(player, Null(), health - Health(player));
+	} else if (Health(player) > health) {
+		Damage(player, Null(), Health(player) - health);
+	}
+}
+
+method GetMaxHealth(player)
+{
+	return Health(player) / (HealthPercent(player) / 100);
+}
+
+method PointFromPointDirectionDistance(startingPoint, direction, distance)
+{
+	return startingPoint + (direction * distance);
+}
+
+//only works when there is at least 1 player spawned in
+method TallnessOfHero(hero)
+{
+	if (CountOf(FilteredArray(PlayersOnHero(hero), IsAlive(ArrayElement()))) > 0)
+	{
+		return TallnessOfPlayer(FilteredArray(PlayersOnHero(hero), IsAlive(ArrayElement()))[0]);
+	}
+	else 
+	{
+		define playerSwitched = RandomValueInArray(AllLivingPlayers());
+		define playerSwitchedHero = HeroOf(playerSwitched);
+		ForcePlayerHero(playerSwitched, hero);
+		define returnValue = TallnessOfPlayer(playerSwitched);
+		ForcePlayerHero(playerSwitched, playerSwitchedHero);
+		StopForcingHero(playerSwitched);
+		return returnValue;
+	}
+}
+
+//doesn't work right now
+method NearestSolidSurface(point, accuracy)
+{
+	define directions = [Up(), Down(), Forward(), Right(), Backward(), Left()];
+	for (define i = 0; i < accuracy; i++)
+	{
+		directions = SortedArray(directions, DistanceBetween(point, RayCastHitPosition(point, point + (ArrayElement() * 10000))));
+		directions = [directions, Midpoint(directions[0], directions[1])];
+		directions = SortedArray(directions, DistanceBetween(point, RayCastHitPosition(point, point + (ArrayElement() * 10000))));
+	}
+	return RayCastHitPosition(point, point + (directions[0] * 10000));
+}
+
+method SortedMedian(sortedArray)
+{
+	return CountOf(sortedArray) % 2 == 0 ?
+		(sortedArray[(CountOf(sortedArray) + 1) / 2 - 0.5] + sortedArray[(CountOf(sortedArray) + 1) / 2 + 0.5]) / 2 :
+		sortedArray[(CountOf(sortedArray) + 1) / 2];
+}
+
+method UnsortedMedian(unsortedArray)
+{
+	return SortedMedian(SortedArray(unsortedArray, ArrayElement()));
+}
+
+method MaxOfArray(inputArray)
+{
+	return LastOf(SortedArray(inputArray, ArrayElement()));
+}
+
+method MinOfArray(inputArray)
+{
+	return SortedArray(inputArray, ArrayElement())[0];
+}
+
+method Range(inputArray)
+{
+	return MaxOfArray(inputArray) - MinOfArray(inputArray);
+}
