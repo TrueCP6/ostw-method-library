@@ -1,5 +1,5 @@
 # ostw-method-library
-A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/) by [Deltin](https://github.com/ItsDeltin/) to shorten code and generally make things easier.
+A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/) by [Deltin](https://github.com/ItsDeltin/) to shorten code and generally make things easier. Post any suggestions, enhancements, or bugs in the issues tab.
 
 ## Method List
 - `IsAI(player)` Whether the player is an AI or not. by Deltin
