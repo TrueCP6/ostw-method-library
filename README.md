@@ -3,7 +3,7 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 
 ## Method List
 - `IsAIAccurate(player)` Whether the player is an AI or not. Works in more situations but it is more intrusive. by Deltin
-- `IsAIUnintrusive` Whether the player is an AI or not. Works in less situations but much less intrusive. by aLazyLion
+- `IsAIUnintrusive(player)` Whether the player is an AI or not. Works in less situations but much less intrusive. by aLazyLion
 - `Pi()` Returns an approximation of pi.
 - `SphereHitbox(player, spherePosition, sphereRadius)` Whether the player is looking directly at the sphere. Has collision.
 - `EyeCastPosition(player, range)` Simplified RayCastHitPosition that casts a ray in the direction the player is looking.
