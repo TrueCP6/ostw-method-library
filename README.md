@@ -15,7 +15,7 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 - `LinearInterpolate(point1, point2, fraction)` 1/2 as the fraction will give the midpoint between the points and 1/10 will return the point one tenth of the way along a straight line drawn between them. Fraction should be fraction of distance along straight line between points and must be less than 1 and greater than 0.
 - `LinearInterpolateDistance(point1, point2, distance)` Same as LinearInterpolate, but instead of going a fraction of the distance between points it goes a distance between points.
 - `Pythag(side1, side2)` Returns length of hypotenuse.
-- `Pythag(side1, hypotenuse)` Returns length of missing side.
+- `PythagConverse(side1, hypotenuse)` Returns length of missing side.
 - `ToKPH(metersPerSecond)`
 - Imperial Units Conversion `ToMPH(metersPerSecond) ToFt(meters) ToYards(meters) ToInches(meters)`
 - `TallnessOfPlayer(player)` Height of player measured from eyes to feet.
@@ -30,6 +30,7 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 - `MaxOfArray(inputArray)`
 - `MinOfArray(inputArray)`
 - `Range(inputArray)`
+- `GenerateForeachArray(length)` Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
 
 ## Downloads
 - [Releases](https://github.com/TrueCP6/ostw-method-library/releases/)
