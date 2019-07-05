@@ -1,4 +1,4 @@
-method IsAI(player) //by deltin
+method IsAIAccurate(player) //by deltin
 {
     define originalHero = HeroOf(player);
 
@@ -16,9 +16,16 @@ method IsAI(player) //by deltin
     return isAI;
 }
 
+//requires player to be spawned in
+method IsAIUnintrusive(player)
+{
+	Communicate(player, Communication.VoiceLineUp);
+	return Not(IsCommunicating(player, Communication.VoiceLineUp));
+}
+
 method Pi()
 {
-    return 3.146;
+    return 355 / 113;
 }
 
 method SphereHitbox(player, spherePosition, sphereRadius)
