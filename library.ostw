@@ -89,7 +89,7 @@ method Pythag(side1, side2)
 }
 
 //returns side2 length
-method Pythag(side1, hypotenuse)
+method PythagConverse(side1, hypotenuse)
 {
 	return Sqrt(hypotenuse^2 - side1^2);
 }
@@ -196,4 +196,14 @@ method TallnessOfHero(hero)
 		: (hero == Hero.Moira ? 1.7 : Null()
 		)))))))))))))))))
 	;
+}
+
+method GenerateForeachArray(length)
+{
+	define returnArray;
+	for (define i = 0; i < length; i++)
+	{
+		returnArray[i] = i;
+	}
+	return returnArray;
 }
