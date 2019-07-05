@@ -1,27 +1,19 @@
 method IsAI(player) //by deltin
 {
-	define currentHero = HeroOf(player);
-	define heroSwap = HeroVar(Hero.Ana);
-	define isAI;
+    define originalHero = HeroOf(player);
 
-	if (currentHero == HeroVar(Hero.Ana))
-	{
-		heroSwap = HeroVar(Hero.Bastion);
-	}
+    // originalHero will equal null if no hero is chosen. 
+    if (originalHero == null)
+        return false;
 
-	ForcePlayerHero(player, heroSwap);
-	if (HeroOf(player) == currentHero)
-	{
-		isAI = true;
-	}
-	else
-	{
-		isAI = false;
-	}
-	ForcePlayerHero(player, currentHero);
-	StopForcingHero(player);
-	
-	return isAI;
+    // The hero being forced should be any hero that isn't an AI option.
+    ForcePlayerHero(player,         Hero.Ashe);
+    define isAI = HeroOf(player) != Hero.Ashe;
+
+    ForcePlayerHero(player, originalHero);
+    StopForcingHero(player);
+
+    return isAI;
 }
 
 method Pi()
