@@ -1,3 +1,4 @@
+# Whether the player is an AI or not. Works in more situations but it is more intrusive.
 method IsAIAccurate(player) //by deltin
 {
     define originalHero = HeroOf(player);
@@ -16,33 +17,38 @@ method IsAIAccurate(player) //by deltin
     return isAI;
 }
 
-//requires player to be spawned in
+# Whether the player is an AI or not. Works in less situations but much less intrusive. Requires the player to be spawned in
 method IsAIUnintrusive(player)
 {
 	Communicate(player, Communication.VoiceLineUp);
 	return Not(IsCommunicating(player, Communication.VoiceLineUp));
 }
 
+# Returns an approximation of pi.
 method Pi()
 {
     return 355 / 113;
 }
 
+# Whether the player is looking directly at the sphere. Has collision.
 method SphereHitbox(player, spherePosition, sphereRadius)
 {
 	return DistanceBetween(spherePosition, EyeCastPosition(player, DistanceBetween(EyePosition(player), spherePosition))) <= sphereRadius;
 }
 
+# Simplified RayCastHitPosition that casts a ray in the direction the player is looking.
 method EyeCastPosition(player, range)
 {
 	return RayCastHitPosition(EyePosition(player), EyePosition(player) + FacingDirection(player) * range);
 }
 
+# Midpoint between 2 vectors.
 method Midpoint(point1, point2)
 {
 	return (point1 + point2) / 2;
 }
 
+# Total value of an array
 method SumOfArray(arrayToSum)
 {
 	define total = 0;
@@ -53,60 +59,68 @@ method SumOfArray(arrayToSum)
 	return total;
 }
 
+# Average value of an array
 method AverageOfArray(arrayToAverage)
 {
 	return SumOfArray(arrayToAverage) / CountOf(arrayToAverage);
 }
 
-//returns angle a sphere will take up in field of view
+# Angle of field of view a certain sphere will take up at a distance. When calculating distance using a player use Eye Position.
 method FOVTakenUpBySphere(distanceToSphereCenter, sphereRadius)
 {
 	return 2 * ArcsineToDegrees(sphereRadius / distanceToSphere);
 }
 
-//returns distance as if both points were on the same y level
+# Returns distance as if both points were on the same y level.
 method HorizontalDistance(point1, point2)
 {
 	return Sqrt((XOf(point1) - XOf(point2)) ^ 2 + (ZOf(point1) - ZOf(point2)) ^ 2);
 }
 
-//fraction should be fraction of distance along straight line between points e.g 1/2 will give the midpoint between the points and 1/10 will return the point one tenth of the way along a straight line drawn between them
+# 1/2 as the fraction will give the midpoint between the points and 1/10 will return the point one tenth of the way along a straight line drawn between them. Fraction should be fraction of distance along straight line between points and must be less than 1 and greater than 0.
 method LinearInterpolate(point1, point2, fraction)
 {
 	return point1*(1-fraction) + point2*fraction;
 }
 
-//same as linear interpolate, but instead returns a point a certain distance along a straight line drawn between the 2 points 
+# Same as LinearInterpolate, but instead of going a fraction of the distance between points it goes a distance between points.
 method LinearInterpolateDistance(point1, point2, distance)
 {
 	return LinearInterpolate(point1, point1, distance / DistanceBetween(point1, point2));
 }
 
-//returns hypotenuse length
+# Returns length of hypotenuse.
 method Pythag(side1, side2)
 {
 	return Sqrt(side1^2 + side2^2);
 }
 
-//returns side2 length
+# Returns length of missing side.
 method PythagConverse(side1, hypotenuse)
 {
 	return Sqrt(hypotenuse^2 - side1^2);
 }
 
+# Convert from meters per second to kilometers per hour
 method ToKPH(metersPerSecond) { return metersPerSecond * 3.6; }
 
 //convert to americanese units
+# Convert from meters per second to miles per hour
 method ToMPH(metersPerSecond) { return metersPerSecond * 2.237; }
+# Convert from meters to feet
 method ToFt(meters) { return meters * 2.381; }
+# Convert from meters to yards
 method ToYards(meters) { return meters * 1.094; }
+# Convert from meters to inches
 method ToInches(meters) { return meters * 39.37; }
 
+# Height of player measured from eyes to feet.
 method TallnessOfPlayer(player)
 {
 	return YOf(EyePosition(player)) - YOf(PositionOf(player));
 }
 
+# Checks if a point is visible on screen to the player.
 method IsOnScreen(player, point, fovOfPlayer)
 {
 	return (
@@ -115,6 +129,7 @@ method IsOnScreen(player, point, fovOfPlayer)
 	);
 }
 
+# Sets the health of the player.
 method SetHealth(player, health)
 {
 	if (Health(player) < health) {
@@ -124,16 +139,19 @@ method SetHealth(player, health)
 	}
 }
 
+# Gets max health of player. e.g. If player is Tracer it will return 150.
 method GetMaxHealth(player)
 {
 	return Health(player) / (HealthPercent(player) / 100);
 }
 
+# Returns point calculated from starting point going in a direction for a distance.
 method PointFromPointDirectionDistance(startingPoint, direction, distance)
 {
 	return startingPoint + (direction * distance);
 }
 
+# Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
 method NearestSolidSurface(point, accuracy)
 {
 	define directions = [Up(), Down(), Forward(), Right(), Backward(), Left()];
@@ -141,11 +159,12 @@ method NearestSolidSurface(point, accuracy)
 	{
 		directions = SortedArray(directions, DistanceBetween(point, RayCastHitPosition(point, point + (ArrayElement() * 10000))));
 		directions = [directions, Midpoint(directions[0], directions[1])];
-		directions = SortedArray(directions, DistanceBetween(point, RayCastHitPosition(point, point + (ArrayElement() * 10000))));
 	}
+	directions = SortedArray(directions, DistanceBetween(point, RayCastHitPosition(point, point + (ArrayElement() * 10000))));
 	return RayCastHitPosition(point, point + (directions[0] * 10000));
 }
 
+# Get median of array that is pre-sorted.
 method SortedMedian(sortedArray)
 {
 	return CountOf(sortedArray) % 2 == 0 ?
@@ -153,30 +172,35 @@ method SortedMedian(sortedArray)
 		sortedArray[(CountOf(sortedArray) + 1) / 2];
 }
 
+# Get median of unsorted array.
 method UnsortedMedian(unsortedArray)
 {
 	return SortedMedian(SortedArray(unsortedArray, ArrayElement()));
 }
 
+# Highest value of array
 method MaxOfArray(inputArray)
 {
 	return LastOf(SortedArray(inputArray, ArrayElement()));
 }
 
+# Lowest value of array
 method MinOfArray(inputArray)
 {
 	return SortedArray(inputArray, ArrayElement())[0];
 }
 
+# Highest value of array subtracted from lowest value of array
 method Range(inputArray)
 {
 	return MaxOfArray(inputArray) - MinOfArray(inputArray);
 }
 
+# Gets height of hero measured from eyes to feet
 method TallnessOfHero(hero)
 {
 	return
-		hero == Hero.Dva ? 1.74
+		(hero == Hero.Dva) ? 1.74
 		: (hero == Hero.Orisa ? 1.78
 		: (hero == Hero.Reinhardt ? 1.8
 		: (hero == Hero.Roadhog | hero == Hero.Zarya ? 1.6
@@ -198,6 +222,7 @@ method TallnessOfHero(hero)
 	;
 }
 
+# Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
 method GenerateForeachArray(length)
 {
 	define returnArray;
