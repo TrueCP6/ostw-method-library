@@ -201,23 +201,23 @@ method TallnessOfHero(hero)
 {
 	return
 		(hero == Hero.Dva) ? 1.74
-		: (hero == Hero.Orisa ? 1.78
-		: (hero == Hero.Reinhardt ? 1.8
-		: (hero == Hero.Roadhog | hero == Hero.Zarya ? 1.6
-		: (hero == Hero.Winston | hero == Hero.Doomfist | hero == Hero.Widowmaker ? 1.5
-		: (hero == Hero.WreckingBall ? 1.83
-		: (hero == Hero.Ashe | hero == Hero.Mercy ? 1.45
-		: (hero == Hero.Bastion ? 1.82
-		: (hero == Hero.Genji ? 1.2
-		: (hero == Hero.Hanzo | hero == Hero.Pharah | hero == Hero.Baptiste ? 1.35
-		: (hero == Hero.Junkrat | hero == Hero.Tracer | hero == Hero.Ana ? 1.25
-		: (hero == Hero.Mccree ? 1.43
-		: (hero == Hero.Mei | hero == Hero.Sombra | hero == Hero.Symmetra? 1.3
-		: (hero == Hero.Reaper | hero == Hero.Soldier76 | hero == Hero.Zenyatta? 1.55
-		: (hero == Hero.Torbjorn ? 1
-		: (hero == Hero.Brigitte ? 1.58
-		: (hero == Hero.Lucio ? 1.17
-		: (hero == Hero.Moira ? 1.7 : Null()
+		: ((hero == Hero.Orisa) ? 1.78
+		: ((hero == Hero.Reinhardt) ? 1.8
+		: ((hero == Hero.Roadhog | hero == Hero.Zarya) ? 1.6
+		: ((hero == Hero.Winston | hero == Hero.Doomfist | hero == Hero.Widowmaker) ? 1.5
+		: ((hero == Hero.WreckingBall) ? 1.83
+		: ((hero == Hero.Ashe | hero == Hero.Mercy) ? 1.45
+		: ((hero == Hero.Bastion) ? 1.82
+		: ((hero == Hero.Genji) ? 1.2
+		: ((hero == Hero.Hanzo | hero == Hero.Pharah | hero == Hero.Baptiste) ? 1.35
+		: ((hero == Hero.Junkrat | hero == Hero.Tracer | hero == Hero.Ana) ? 1.25
+		: ((hero == Hero.Mccree) ? 1.43
+		: ((hero == Hero.Mei | hero == Hero.Sombra | hero == Hero.Symmetra) ? 1.3
+		: ((hero == Hero.Reaper | hero == Hero.Soldier76 | hero == Hero.Zenyatta) ? 1.55
+		: ((hero == Hero.Torbjorn) ? 1
+		: ((hero == Hero.Brigitte) ? 1.58
+		: ((hero == Hero.Lucio) ? 1.17
+		: ((hero == Hero.Moira) ? 1.7 : Null()
 		)))))))))))))))))
 	;
 }
