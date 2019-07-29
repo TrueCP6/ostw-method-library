@@ -40,4 +40,4 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 Installation instructions can be found [here](https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/) for OSTW. Copy the contents of library.ostw into your project file.
 
 ## Usage
-Once installed you can use the methods like you would any other action. NOTE: As of right now no methods can be used within the conditions tab. However you can work around this by using AbortIf(Not(condition)) at the beginning of the actions for each condition that uses a method (this has some limitations). Custom arrays seem to not work either as of now so try not to use them. Could just be me being dumb though ¯\_(ツ)_/¯.
+Once installed you can use the methods like you would any other action. NOTE: As of right now no methods can be used within the conditions tab. However you can work around this by using AbortIf(Not(condition)) at the beginning of the actions for each condition that uses a method (this has some limitations).
