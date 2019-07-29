@@ -1,0 +1,17 @@
+//set these variables to change the behavior of the barrier
+//they can be arrays and scale up correctly with all players to work with all barriers
+define globalvar sphericalBarrierPosition; //vector
+define globalvar sphericalBarrierRadius;
+define globalvar keepInSphericalBarrier; //if true keeps players within radius, if false keeps players outside of radius
+
+rule:"Spherical Barrier Module"
+Event.OngoingPlayer
+if (CountOf(
+        FilteredArray(sphericalBarrierPosition, keepInSphericalBarrier ?
+            DistanceBetween(PositionOf(EventPlayer()), ArrayElement()) <= :
+
+        );
+    ) > 0)
+{
+    
+}

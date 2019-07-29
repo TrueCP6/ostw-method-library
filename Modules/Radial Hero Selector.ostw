@@ -1,0 +1,415 @@
+define playervar radialMenuPosition;
+define playervar radialMenuRadius;
+define playervar radialMenuSelectedIcon;
+
+rule:"Open Menu"
+Event.OngoingPlayer
+if (IsButtonHeld(EventPlayer(), Button.Interact))
+if (radialMenuRadius != 0)
+{
+    radialMenuPosition = EyePosition(EventPlayer()) + (DirectionFromAngles(HorizontalFacingAngleOf(EventPlayer()), Min(40, Max(-40, VerticalFacingAngleOf(EventPlayer())))) * 2);
+    radialMenuRadius = 0;
+    ChaseVariable(radialMenuRadius, 0.2 + (0.028 * CountOf(AllowedHeroes(EventPlayer()))), 3);
+}
+
+rule:"Close Menu"
+Event.OngoingPlayer
+if(IsButtonHeld(EventPlayer(), Button.Interact) == false)
+{
+
+}
+
+rule:"Initialise all icons"
+Event.OngoingPlayer
+{
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[0]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(0 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(0 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 0 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[1]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(1 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(1 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 1 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[2]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(2 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(2 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 2 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[3]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(3 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(3 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 3 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[4]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(4 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(4 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 4 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[5]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(5 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(5 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 5 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[6]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(6 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(6 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 6 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[7]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(7 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(7 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 7 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[8]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(8 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(8 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 8 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[9]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(9 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(9 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 9 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[10]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(10 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(10 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 10 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[11]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(11 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(11 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 11 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[12]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(12 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(12 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 12 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[13]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(13 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(13 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 13 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[14]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(14 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(14 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 14 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[15]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(15 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(15 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 15 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[16]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(16 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(16 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 16 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[17]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(17 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(17 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 17 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[18]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(18 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(18 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 18 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[19]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(19 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(19 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 19 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[20]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(20 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(20 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 20 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[21]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(21 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(21 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 21 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[22]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(22 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(22 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 22 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[23]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(23 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(23 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 23 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[24]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(24 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(24 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 24 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[25]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(25 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(25 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 25 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[26]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(26 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(26 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 26 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[27]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(27 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(27 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 27 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[28]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(28 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(28 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 28 + 1);
+    MinWait();
+
+    CreateInWorldText(
+        FilteredArray(EventPlayer(), radialMenuRadius != 0),
+        HeroIconString(AllowedHeroes(EventPlayer())[29]),
+        WorldVectorOf(
+            Vector(radialMenuRadius * CosineFromDegrees(29 * (360 / CountOf(AllowedHeroes(EventPlayer())))), radialMenuRadius * SineFromDegrees(29 * (360 / CountOf(AllowedHeroes(EventPlayer())))), 0)
+         + LocalVectorOf(radialMenuPosition, EventPlayer(), Transformation.RotationAndTranslation), EventPlayer(), LocalVector.RotationAndTranslation),
+        2.5,
+        Clipping.DoNotClip,
+        InworldTextRev.VisibleToPositionAndString
+    );
+    AbortIf(CountOf(AllowedHeroes(EventPlayer())) <= 29 + 1);
+    MinWait();
+
+}
