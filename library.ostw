@@ -139,12 +139,6 @@ method SetHealth(player, health)
 	}
 }
 
-# Gets max health of player. e.g. If player is Tracer it will return 150.
-method GetMaxHealth(player)
-{
-	return Health(player) / (HealthPercent(player) / 100);
-}
-
 # Returns point calculated from starting point going in a direction for a distance.
 method PointFromPointDirectionDistance(startingPoint, direction, distance)
 {
@@ -167,9 +161,7 @@ method NearestSolidSurface(point, accuracy)
 # Get median of array that is pre-sorted.
 method SortedMedian(sortedArray)
 {
-	return CountOf(sortedArray) % 2 == 0 ?
-		(sortedArray[(CountOf(sortedArray) + 1) / 2 - 0.5] + sortedArray[(CountOf(sortedArray) + 1) / 2 + 0.5]) / 2 :
-		sortedArray[(CountOf(sortedArray) + 1) / 2];
+	return BlendedIndex(sortedArray, (CountOf(sortedArray) + 1) / 2);
 }
 
 # Get median of unsorted array.
@@ -231,4 +223,13 @@ method GenerateForeachArray(length)
 		returnArray[i] = i;
 	}
 	return returnArray;
+}
+
+# Allows you to get the index of an array as a non-integer. Blends the index lower and the index higher together in a weighted way. Array must be of multiplicable values (not player or string).
+method BlendedIndex(array, index)
+{
+	return RoundToInteger(index, Rounding.Down) == index ?
+		index :
+		array[RoundToInteger(index, Rounding.Down)] * (index - RoundToInteger(index, Rounding.Down)) + array[RoundToInteger(index, Rounding.Up)] * (RoundToInteger(index, Rounding.Up) - index)
+	;
 }

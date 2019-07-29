@@ -31,6 +31,7 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 - `MinOfArray(inputArray)`
 - `Range(inputArray)`
 - `GenerateForeachArray(length)` Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
+- `BlendedIndex(array, index)` Allows you to get the index of an array as a non-integer. Blends the index lower and the index higher together in a weighted way. Array must be of multiplicable values (not player or string).
 
 ## Downloads
 - [Releases](https://github.com/TrueCP6/ostw-method-library/releases/)
