@@ -2,6 +2,7 @@
 A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin/Overwatch-Script-To-Workshop/) by [Deltin](https://github.com/ItsDeltin/) to shorten code and generally make things easier. Post any suggestions, enhancements, or bugs in the issues tab.
 
 ## Method List
+Optimised methods are methods that sacrifice amount of variables used as well as the ability to use them in conditions for lowered server load.
 - `IsAIAccurate(player)` Whether the player is an AI or not. Works in more situations but it is more intrusive. by Deltin
 - `IsAIUnintrusive(player)` Whether the player is an AI or not. Works in less situations but much less intrusive. by aLazyLion
 - `OptimisedSphereHitbox(player, spherePosition, sphereRadius)` Whether the player is looking directly at the sphere. Has collision.
