@@ -17,7 +17,7 @@ method IsAIAccurate(player) //by deltin
     return isAI;
 }
 
-# Whether the player is an AI or not. Works in less situations but much less intrusive. Requires the player to be spawned in
+# Whether the player is an AI or not. Works in less situations but much less intrusive. Requires the player to be spawned in.
 method IsAIUnintrusive(player)
 {
 	Communicate(player, Communication.VoiceLineUp);
@@ -25,13 +25,13 @@ method IsAIUnintrusive(player)
 }
 
 # Whether the player is looking directly at the sphere. Has collision.
-method SphereHitbox(player, spherePosition, sphereRadius)
+method OptimisedSphereHitbox(player, spherePosition, sphereRadius)
 {
 	return DistanceBetween(spherePosition, EyeCastPosition(player, DistanceBetween(EyePosition(player), spherePosition))) <= sphereRadius;
 }
 
 # Simplified RayCastHitPosition that casts a ray in the direction the player is looking.
-method EyeCastPosition(player, range)
+method OptimisedEyeCastPosition(player, range)
 {
 	return RayCastHitPosition(EyePosition(player), EyePosition(player) + FacingDirection(player) * range);
 }
@@ -54,44 +54,31 @@ method AverageOfArray(arrayToAverage)
 }
 
 # Returns distance as if both points were on the same y level.
-method HorizontalDistance(point1, point2)
+method OptimisedHorizontalDistance(point1, point2)
 {
 	return Sqrt((XOf(point1) - XOf(point2)) ^ 2 + (ZOf(point1) - ZOf(point2)) ^ 2);
 }
 
 # 1/2 as the fraction will give the midpoint between the points and 1/10 will return the point one tenth of the way along a straight line drawn between them. Fraction should be fraction of distance along straight line between points and must be less than 1 and greater than 0.
-method LinearInterpolate(point1, point2, fraction)
+method OptimisedLinearInterpolate(point1, point2, fraction)
 {
 	return point1*(1-fraction) + point2*fraction;
 }
 
 # Same as LinearInterpolate, but instead of going a fraction of the distance between points it goes a distance between points.
-method LinearInterpolateDistance(point1, point2, distance)
+method OptimisedLinearInterpolateDistance(point1, point2, distance)
 {
 	return LinearInterpolate(point1, point1, distance / DistanceBetween(point1, point2));
 }
 
-# Convert from meters per second to kilometers per hour
-method ToKPH(metersPerSecond) { return metersPerSecond * 3.6; }
-
-//convert to americanese units
-# Convert from meters per second to miles per hour
-method ToMPH(metersPerSecond) { return metersPerSecond * 2.237; }
-# Convert from meters to feet
-method ToFt(meters) { return meters * 2.381; }
-# Convert from meters to yards
-method ToYards(meters) { return meters * 1.094; }
-# Convert from meters to inches
-method ToInches(meters) { return meters * 39.37; }
-
 # Height of player measured from eyes to feet.
-method TallnessOfPlayer(player)
+method OptimisedTallnessOfPlayer(player)
 {
 	return YOf(EyePosition(player)) - YOf(PositionOf(player));
 }
 
 # Checks if a point is visible on screen to the player.
-method IsOnScreen(player, point, fovOfPlayer)
+method OptimisedIsOnScreen(player, point, fovOfPlayer)
 {
 	return (
 		IsInLineOfSight(EyePosition(player), point) &
@@ -123,19 +110,19 @@ method NearestSolidSurface(point, accuracy)
 }
 
 # Get median of array that is pre-sorted.
-method SortedMedian(sortedArray)
+method OptimisedSortedMedian(sortedArray)
 {
 	return BlendedIndex(sortedArray, (CountOf(sortedArray) + 1) / 2);
 }
 
 # Get median of unsorted array.
-method UnsortedMedian(unsortedArray)
+method OptimisedUnsortedMedian(unsortedArray)
 {
 	return SortedMedian(SortedArray(unsortedArray, ArrayElement()));
 }
 
 # Highest value of array subtracted from lowest value of array
-method Range(inputArray)
+method OptimisedRange(inputArray)
 {
 	return MaxOfArray(inputArray) - MinOfArray(inputArray);
 }
