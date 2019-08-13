@@ -24,12 +24,6 @@ method IsAIUnintrusive(player)
 	return Not(IsCommunicating(player, Communication.VoiceLineUp));
 }
 
-# Returns an approximation of pi.
-method Pi()
-{
-    return 355 / 113;
-}
-
 # Whether the player is looking directly at the sphere. Has collision.
 method SphereHitbox(player, spherePosition, sphereRadius)
 {
@@ -40,12 +34,6 @@ method SphereHitbox(player, spherePosition, sphereRadius)
 method EyeCastPosition(player, range)
 {
 	return RayCastHitPosition(EyePosition(player), EyePosition(player) + FacingDirection(player) * range);
-}
-
-# Midpoint between 2 vectors.
-method Midpoint(point1, point2)
-{
-	return (point1 + point2) / 2;
 }
 
 # Total value of an array
@@ -65,12 +53,6 @@ method AverageOfArray(arrayToAverage)
 	return SumOfArray(arrayToAverage) / CountOf(arrayToAverage);
 }
 
-# Angle of field of view a certain sphere will take up at a distance. When calculating distance using a player use Eye Position.
-method FOVTakenUpBySphere(distanceToSphereCenter, sphereRadius)
-{
-	return 2 * ArcsineToDegrees(sphereRadius / distanceToSphere);
-}
-
 # Returns distance as if both points were on the same y level.
 method HorizontalDistance(point1, point2)
 {
@@ -87,18 +69,6 @@ method LinearInterpolate(point1, point2, fraction)
 method LinearInterpolateDistance(point1, point2, distance)
 {
 	return LinearInterpolate(point1, point1, distance / DistanceBetween(point1, point2));
-}
-
-# Returns length of hypotenuse.
-method Pythag(side1, side2)
-{
-	return Sqrt(side1^2 + side2^2);
-}
-
-# Returns length of missing side.
-method PythagConverse(side1, hypotenuse)
-{
-	return Sqrt(hypotenuse^2 - side1^2);
 }
 
 # Convert from meters per second to kilometers per hour
@@ -139,12 +109,6 @@ method SetHealth(player, health)
 	}
 }
 
-# Returns point calculated from starting point going in a direction for a distance.
-method PointFromPointDirectionDistance(startingPoint, direction, distance)
-{
-	return startingPoint + (direction * distance);
-}
-
 # Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
 method NearestSolidSurface(point, accuracy)
 {
@@ -168,18 +132,6 @@ method SortedMedian(sortedArray)
 method UnsortedMedian(unsortedArray)
 {
 	return SortedMedian(SortedArray(unsortedArray, ArrayElement()));
-}
-
-# Highest value of array
-method MaxOfArray(inputArray)
-{
-	return LastOf(SortedArray(inputArray, ArrayElement()));
-}
-
-# Lowest value of array
-method MinOfArray(inputArray)
-{
-	return SortedArray(inputArray, ArrayElement())[0];
 }
 
 # Highest value of array subtracted from lowest value of array
@@ -225,11 +177,36 @@ method GenerateForeachArray(length)
 	return returnArray;
 }
 
-# Allows you to get the index of an array as a non-integer. Blends the index lower and the index higher together in a weighted way. Array must be of multiplicable values (not player or string).
-method BlendedIndex(array, index)
-{
-	return RoundToInteger(index, Rounding.Down) == index ?
-		index :
-		array[RoundToInteger(index, Rounding.Down)] * (index - RoundToInteger(index, Rounding.Down)) + array[RoundToInteger(index, Rounding.Up)] * (RoundToInteger(index, Rounding.Up) - index)
-	;
-}
+// # Allows you to get the index of an array as a non-integer. Blends the index lower and the index higher together in a weighted way. Array must be of multiplicable values (not player or string).
+// method BlendedIndex(array, index)
+// {
+// 	return RoundToInteger(index, Rounding.Down) == index ?
+// 		index :
+// 		array[RoundToInteger(index, Rounding.Down)] * (index - RoundToInteger(index, Rounding.Down)) + array[RoundToInteger(index, Rounding.Up)] * (RoundToInteger(index, Rounding.Up) - index)
+// 	;
+// }
+
+// struct RadialHeroMenu
+// {
+// 	define player;
+// 	define heroes;
+// 	define position;
+// 	define radius;
+	
+// 	public method Open()
+// 	{
+// 		this.position = EyePosition(this.player) + (DirectionFromAngles(HorizontalFacingAngleOf(this.player), Min(40, Max(-40, VerticalFacingAngleOf(this.player)))) * 2);
+//     	this.radius = 0;
+//     	ChaseVariable(this.radius, 0.2 + (0.028 * CountOf(this.heroes)), 3);
+// 	}
+
+// 	public method Close()
+// 	{
+// 		ChaseVariable(this.radius, 0, 3);
+// 	}
+
+// 	public method Select()
+// 	{
+// 		return 
+// 	}
+// }

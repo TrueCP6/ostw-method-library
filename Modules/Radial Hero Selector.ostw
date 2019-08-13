@@ -16,7 +16,7 @@ rule:"Close Menu"
 Event.OngoingPlayer
 if(IsButtonHeld(EventPlayer(), Button.Interact) == false)
 {
-
+    
 }
 
 rule:"Initialise all icons"
