@@ -75,6 +75,27 @@ method GenerateForeachArray(length)
 	return returnArray;
 }
 
+struct Dictionary 
+{
+	define Keys;
+	define Values;
+	public Dictionary(keys, values)
+	{
+		Keys = keys;
+		Values = values;
+	}
+
+	public method GetValueFromKey(key)
+	{
+		return this.Values[IndexOfArrayValue(this.Keys, key)];
+	}
+
+	public method GetKeyFromValue(value)
+	{
+		return this.Keys[IndexOfArrayValue(this.Values, value)];
+	}
+}
+
 // struct RadialHeroMenu
 // {
 // 	define player;
