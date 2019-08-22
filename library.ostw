@@ -77,36 +77,33 @@ struct Dictionary
 
 	public method GetValueFromKey(key)
 	{
-		return this.Values[IndexOfArrayValue(this.Keys, key)];
+		return Values[IndexOfArrayValue(Keys, key)];
 	}
 
 	public method GetKeyFromValue(value)
 	{
-		return this.Keys[IndexOfArrayValue(this.Values, value)];
+		return this.Keys[IndexOfArrayValue(Values, value)];
+	}
+
+	public method SetValueAtKey(key, value)
+	{
+		Values[IndexOfArrayValue(Keys, key)] = value;
+	}
+
+	public method SetKeyAtValue(value, key)
+	{
+		Keys[IndexOfArrayValue(Values, value)] = key;
+	}
+
+	public method RemoveLeftPlayers()
+	{
+		for (define i = 0; 0 < CountOf(Keys); i++)
+		{
+			if (EntityExists(Keys[i]) == false)
+			{
+				RemoveFromArrayAtIndex(Keys, i);
+				RemoveFromArrayAtIndex(Values, i);
+			}
+		}
 	}
 }
-
-// struct RadialHeroMenu
-// {
-// 	define player;
-// 	define heroes;
-// 	define position;
-// 	define radius;
-	
-// 	public method Open()
-// 	{
-// 		this.position = EyePosition(this.player) + (DirectionFromAngles(HorizontalFacingAngleOf(this.player), Min(40, Max(-40, VerticalFacingAngleOf(this.player)))) * 2);
-//     	this.radius = 0;
-//     	ChaseVariable(this.radius, 0.2 + (0.028 * CountOf(this.heroes)), 3);
-// 	}
-
-// 	public method Close()
-// 	{
-// 		ChaseVariable(this.radius, 0, 3);
-// 	}
-
-// 	public method Select()
-// 	{
-// 		return 
-// 	}
-// }
