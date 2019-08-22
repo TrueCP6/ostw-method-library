@@ -217,13 +217,13 @@ struct SphericalBarrier
 	public method BoopPlayerInside(player, speed)
 	{
 		while (IsPlayerOutside(player))
-			ApplyImpulse(player, DirectionTowards(PositionOf(player), Position), speed, ContraryMotion.Cancel);
+			ApplyImpulse(player, DirectionTowards(PositionOf(player), Position), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
 	public method BoopPlayerOutside(player, speed)
 	{
 		while (IsPlayerInside(player))
-			ApplyImpulse(player, DirectionTowards(Position, PositionOf(player)), speed, ContraryMotion.Cancel);
+			ApplyImpulse(player, DirectionTowards(Position, PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
 	public method PlayersOutside()
@@ -234,15 +234,5 @@ struct SphericalBarrier
 	public method PlayersInside()
 	{
 		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
-	}
-
-	public method PlayersOutside(playerArray)
-	{
-		return FilteredArray(playerArray, DistanceBetween(PositionOf(ArrayElement()), Position) > Radius);
-	}
-
-	public method PlayersInside(playerArray)
-	{
-		return FilteredArray(playerArray, DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
 	}
 }
