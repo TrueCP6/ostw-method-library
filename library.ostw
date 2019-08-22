@@ -75,6 +75,21 @@ struct Dictionary
 		Values = values;
 	}
 
+	public method Dictionary()
+	{
+		Keys = EmptyArray();
+		Values = EmptyArray();
+	}
+
+	public method Dictionary(tupleArray)
+	{
+		for (define i = 0; i < CountOf(tupleArray); i++)
+		{
+			Keys[i] = tupleArray[i][0];
+			Values[i] = tupleArray[i][1];
+		}
+	}
+
 	public method GetValueFromKey(key)
 	{
 		return Values[IndexOfArrayValue(Keys, key)];
@@ -103,8 +118,48 @@ struct Dictionary
 			{
 				RemoveFromArrayAtIndex(Keys, i);
 				RemoveFromArrayAtIndex(Values, i);
+				i--;
 			}
 		}
+	}
+
+	public method AddEntry(key, value)
+	{
+		Keys = [Keys, key];
+		Values = [Values, value];
+	}
+
+	public method RemoveEmptyEntries()
+	{
+		for (define i = 0; i < CountOf(Keys); i++)
+		{
+			if (Keys[i] == Null() | Values[i] == Null())
+			{
+				RemoveFromArrayAtIndex(Keys, i);
+				RemoveFromArrayAtIndex(Values, i);
+				i--;
+			}
+		}
+	}
+
+	public method RemoveEntryByKey(key)
+	{
+		Values = RemoveFromArray(Values, this.GetValueFromKey(key));
+		Keys = RemoveFromArray(Keys, key);
+	}
+
+	public method RemoveEntryByValue(value)
+	{
+		Keys = RemoveFromArray(Keys, this.GetKeyFromValue(value));
+		Values = RemoveFromArray(Values, value);
+	}
+
+	public method GetTupleArray()
+	{
+		define array;
+		for (define i = 0; i < CountOf(Keys); i++)
+			array[i] = [Keys[i], Values[i]];
+		return array;
 	}
 }
 
