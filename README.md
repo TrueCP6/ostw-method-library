@@ -4,7 +4,6 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 ## Method List
 - `SumOfArray(arrayToSum)`
 - `AverageOfArray(arrayToAverage)`
-- `SetHealth(player, health)` Sets the health of the player.
 - `TallnessOfHero(hero)` Same as tallness of player, but instead gets the value for a hero.
 - `NearestSolidSurface(point, accuracy)` Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
 - `GenerateForeachArray(length)` Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.

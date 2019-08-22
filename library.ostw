@@ -15,16 +15,6 @@ method AverageOfArray(arrayToAverage)
 	return SumOfArray(arrayToAverage) / CountOf(arrayToAverage);
 }
 
-# Sets the health of the player.
-method SetHealth(player, health)
-{
-	if (Health(player) < health) {
-		Heal(player, Null(), health - Health(player));
-	} else if (Health(player) > health) {
-		Damage(player, Null(), Health(player) - health);
-	}
-}
-
 # Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
 method NearestSolidSurface(point, accuracy)
 {
