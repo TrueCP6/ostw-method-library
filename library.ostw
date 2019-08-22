@@ -107,3 +107,87 @@ struct Dictionary
 		}
 	}
 }
+
+struct Trigger
+{
+	define IsActive;
+
+	public Trigger() 
+	{
+		IsActive = False();
+	}
+
+	public method Activate()
+	{
+		IsActive = True();
+	}
+
+	public method Deactivate()
+	{
+		IsActive = False();
+	}
+}
+
+struct SphericalBarrier
+{
+	define Position;
+	define Radius;
+
+	public SphericalBarrier(position, radius)
+	{
+		Position = position;
+		Radius = radius;
+	}
+
+	public method IsPlayerInside(player)
+	{
+		return DistanceBetween(PositionOf(player), Position) <= Radius;
+	}
+
+	public method IsPlayerOutside(player)
+	{
+		return DistanceBetween(PositionOf(player), Position) > Radius;
+	}
+
+	public method TeleportPlayerInside(player)
+	{
+		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Position), DistanceBetween(PositionOf(player), Position) - Radius));
+	}
+
+	public method TeleportPlayerOutside(player)
+	{
+		Teleport(player, Destination(PositionOf(player), DirectionTowards(Position, PositionOf(player)), Radius - DistanceBetween(PositionOf(player), Position)));
+	}
+
+	public method BoopPlayerInside(player, speed)
+	{
+		while (IsPlayerOutside(player))
+			ApplyImpulse(player, DirectionTowards(PositionOf(player), Position), speed, ContraryMotion.Cancel);
+	}
+
+	public method BoopPlayerOutside(player, speed)
+	{
+		while (IsPlayerInside(player))
+			ApplyImpulse(player, DirectionTowards(Position, PositionOf(player)), speed, ContraryMotion.Cancel);
+	}
+
+	public method PlayersOutside()
+	{
+		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) > Radius);
+	}
+
+	public method PlayersInside()
+	{
+		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
+	}
+
+	public method PlayersOutside(playerArray)
+	{
+		return FilteredArray(playerArray, DistanceBetween(PositionOf(ArrayElement()), Position) > Radius);
+	}
+
+	public method PlayersInside(playerArray)
+	{
+		return FilteredArray(playerArray, DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
+	}
+}
