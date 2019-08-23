@@ -236,3 +236,57 @@ struct SphericalBarrier
 		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
 	}
 }
+
+struct CylindricalBarrier
+{
+	define Position;
+	define Radius;
+
+	public CylindricalBarrier(position, radius)
+	{
+		Position = position;
+		Radius = radius;
+	}
+
+	public method IsPlayerInside(player)
+	{
+		return HorizontalDistance(PositionOf(player), Position) <= Radius;
+	}
+
+	public method IsPlayerOutside(player)
+	{
+		return HorizontalDistance(PositionOf(player), Position) > Radius;
+	}
+
+	public method TeleportPlayerInside(player)
+	{
+		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), HorizontalDistance(PositionOf(player), Position) - Radius));
+	}
+
+	public method TeleportPlayerOutside(player)
+	{
+		Teleport(player, Destination(PositionOf(player), DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), Radius - HorizontalDistance(PositionOf(player), Position)));
+	}
+
+	public method BoopPlayerInside(player, speed)
+	{
+		while (IsPlayerOutside(player))
+			ApplyImpulse(player, DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), speed, Relative.ToWorld, ContraryMotion.Cancel);
+	}
+
+	public method BoopPlayerOutside(player, speed)
+	{
+		while (IsPlayerInside(player))
+			ApplyImpulse(player, DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
+	}
+
+	public method PlayersInside()
+	{
+		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) <= Radius);
+	}
+
+	public method PlayersOutside()
+	{
+		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) > Radius);
+	}
+}
