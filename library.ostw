@@ -75,32 +75,37 @@ struct Dictionary
 		Keys = keys;
 		Values = values;
 	}
-
+	
+	# Gets the value corresponding to a key
 	public method GetValueFromKey(key)
 	{
 		return Values[IndexOfArrayValue(Keys, key)];
 	}
 
+	# Gets the key corresponding to a value
 	public method GetKeyFromValue(value)
 	{
 		return this.Keys[IndexOfArrayValue(Values, value)];
 	}
 
+	# Sets the value corresponding to a key
 	public method SetValueAtKey(key, value)
 	{
 		Values[IndexOfArrayValue(Keys, key)] = value;
 	}
 
+	# Sets the key corresponding to a value
 	public method SetKeyAtValue(value, key)
 	{
 		Keys[IndexOfArrayValue(Values, value)] = key;
 	}
 
+	# Removes all entries of players that have left the game
 	public method RemoveLeftPlayers()
 	{
 		for (define i = 0; 0 < CountOf(Keys); i++)
 		{
-			if (EntityExists(Keys[i]) == false)
+			if (EntityExists(Keys[i]) == fa+lse)
 			{
 				RemoveFromArrayAtIndex(Keys, i);
 				RemoveFromArrayAtIndex(Values, i);
@@ -109,12 +114,14 @@ struct Dictionary
 		}
 	}
 
+	# Adds a new entry
 	public method AddEntry(key, value)
 	{
 		Keys = [Keys, key];
 		Values = [Values, value];
 	}
 
+	# Removes all entries with either an empty key or empty value
 	public method RemoveEmptyEntries()
 	{
 		for (define i = 0; i < CountOf(Keys); i++)
@@ -128,18 +135,21 @@ struct Dictionary
 		}
 	}
 
+	# Finds an entry by its key and removes it
 	public method RemoveEntryByKey(key)
 	{
 		Values = RemoveFromArray(Values, this.GetValueFromKey(key));
 		Keys = RemoveFromArray(Keys, key);
 	}
 
+	# Finds an entry by its value and removes it
 	public method RemoveEntryByValue(value)
 	{
 		Keys = RemoveFromArray(Keys, this.GetKeyFromValue(value));
 		Values = RemoveFromArray(Values, value);
 	}
 
+	# Converts the Dictionary object to a tuple-like array where each entry is an array structured like so: [key, value]
 	public method GetTupleArray()
 	{
 		define array;
@@ -158,11 +168,13 @@ struct Trigger
 		IsActive = False();
 	}
 
+	# Activates the trigger
 	public method Activate()
 	{
 		IsActive = True();
 	}
 
+	# Deactivates the trigger
 	public method Deactivate()
 	{
 		IsActive = False();
@@ -180,43 +192,51 @@ struct SphericalBarrier
 		Radius = radius;
 	}
 
+	# Whether the player is inside the the barrier
 	public method IsPlayerInside(player)
 	{
 		return DistanceBetween(PositionOf(player), Position) <= Radius;
 	}
 
+	# Whether the player is outside the barrier
 	public method IsPlayerOutside(player)
 	{
 		return DistanceBetween(PositionOf(player), Position) > Radius;
 	}
 
+	# Teleport the player inside the barrier
 	public method TeleportPlayerInside(player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Position), DistanceBetween(PositionOf(player), Position) - Radius));
 	}
 
+	# Teleports the player outside the barrier
 	public method TeleportPlayerOutside(player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(Position, PositionOf(player)), Radius - DistanceBetween(PositionOf(player), Position)));
 	}
 
+	# Boops the player into the barrier
 	public method BoopPlayerInside(player, speed)
 	{
 		while (IsPlayerOutside(player))
 			ApplyImpulse(player, DirectionTowards(PositionOf(player), Position), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# Boops the player outside the barrier
 	public method BoopPlayerOutside(player, speed)
 	{
 		while (IsPlayerInside(player))
 			ApplyImpulse(player, DirectionTowards(Position, PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# An array of the players outside the barrier
 	public method PlayersOutside()
 	{
 		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) > Radius);
 	}
 
+	# And array of the players inside the barrier
 	public method PlayersInside()
 	{
 		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
@@ -234,43 +254,51 @@ struct CylindricalBarrier
 		Radius = radius;
 	}
 
+	# Whether the player is inside the the barrier
 	public method IsPlayerInside(player)
 	{
 		return HorizontalDistance(PositionOf(player), Position) <= Radius;
 	}
 
+	# Whether the player is outside the barrier
 	public method IsPlayerOutside(player)
 	{
 		return HorizontalDistance(PositionOf(player), Position) > Radius;
 	}
 
+	# Teleports the player inside the barrier
 	public method TeleportPlayerInside(player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), HorizontalDistance(PositionOf(player), Position) - Radius));
 	}
 
+	# Teleports the player outside the barrier
 	public method TeleportPlayerOutside(player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), Radius - HorizontalDistance(PositionOf(player), Position)));
 	}
 
+	# Boops the player inside the barrier
 	public method BoopPlayerInside(player, speed)
 	{
 		while (IsPlayerOutside(player))
 			ApplyImpulse(player, DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# Boops the player outside the barrier
 	public method BoopPlayerOutside(player, speed)
 	{
 		while (IsPlayerInside(player))
 			ApplyImpulse(player, DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# An array of players inside the barrier
 	public method PlayersInside()
 	{
 		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) <= Radius);
 	}
 
+	# An array of players outside the barrier
 	public method PlayersOutside()
 	{
 		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) > Radius);
@@ -296,6 +324,7 @@ struct CuboidBarrier
 		);
 	}
 
+	# Whether the player is inside the the barrier
 	public method IsPlayerInside(player)
 	{
 		return 
@@ -308,6 +337,7 @@ struct CuboidBarrier
 		;
 	}
 
+	# Whether the player is outside the barrier
 	public method IsPlayerOutside(player)
 	{
 		return 
@@ -320,6 +350,7 @@ struct CuboidBarrier
 		;
 	}
 
+	# Teleports the player inside the barrier
 	public method TeleportPlayerInside(player)
 	{
 		Teleport(player, Vector(
@@ -329,6 +360,7 @@ struct CuboidBarrier
 		));
 	}
 
+	# Teleports the player outside the barrier
 	public method TeleportPlayerOutside(player)
 	{
 		Teleport(player, Vector(
@@ -338,6 +370,7 @@ struct CuboidBarrier
 		));
 	}
 
+	# Boops the player inside the barrier
 	public method BoopPlayerInside(player, speed)
 	{
 		while (IsPlayerOutside(player))
@@ -348,6 +381,7 @@ struct CuboidBarrier
 			)), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# Boops the player outside the barrier
 	public method BoopPlayerOutside(player, speed)
 	{
 		while (IsPlayerInside(player))
@@ -358,6 +392,7 @@ struct CuboidBarrier
 			), PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
+	# An array of players inside the barrier
 	public method PlayersInside()
 	{
 		return FilteredArray(AllPlayers(),
@@ -370,6 +405,7 @@ struct CuboidBarrier
 		);
 	}
 
+	# An array of players outside the barrier
 	public method PlayersOutside()
 	{
 		return FilteredArray(AllPlayers(),
