@@ -290,3 +290,109 @@ struct CylindricalBarrier
 		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) > Radius);
 	}
 }
+
+struct CuboidBarrier
+{
+	define Min;
+	define Max;
+
+	public CuboidBarrier(corner1, corner2)
+	{
+		Min = Vector(
+			Min(XOf(corner1), XOf(corner2)),
+			Min(YOf(corner1), YOf(corner2)),
+			Min(ZOf(corner1), ZOf(corner2))
+		);
+		Max = Vector(
+			Max(XOf(corner1), XOf(corner2)),
+			Max(YOf(corner1), YOf(corner2)),
+			Max(ZOf(corner1), ZOf(corner2))
+		);
+	}
+
+	public method IsPlayerInside(player)
+	{
+		return 
+			XOf(Min) > XOf(PositionOf(player)) |
+			YOf(Min) > YOf(PositionOf(player)) |
+			ZOf(Min) > ZOf(PositionOf(player)) |
+			XOf(Max) < XOf(PositionOf(player)) |
+			YOf(Max) < YOf(PositionOf(player)) |
+			ZOf(Max) < ZOf(PositionOf(player))
+		;
+	}
+
+	public method IsPlayerOutside(player)
+	{
+		return 
+			XOf(Min) < XOf(PositionOf(player)) |
+			YOf(Min) < YOf(PositionOf(player)) |
+			ZOf(Min) < ZOf(PositionOf(player)) |
+			XOf(Max) > XOf(PositionOf(player)) |
+			YOf(Max) > YOf(PositionOf(player)) |
+			ZOf(Max) > ZOf(PositionOf(player))
+		;
+	}
+
+	public method TeleportPlayerInside(player)
+	{
+		Teleport(player, Vector(
+			Max(XOf(Min), Min(XOf(Max), XOf(PositionOf(player)))),
+			Max(YOf(Min), Min(YOf(Max), YOf(PositionOf(player)))),
+			Max(ZOf(Min), Min(ZOf(Max), ZOf(PositionOf(player))))
+		));
+	}
+
+	public method TeleportPlayerOutside(player)
+	{
+		Teleport(player, Vector(
+			Min(XOf(Min), Max(XOf(Max), XOf(PositionOf(player)))),
+			Min(YOf(Min), Max(YOf(Max), YOf(PositionOf(player)))),
+			Min(ZOf(Min), Max(ZOf(Max), ZOf(PositionOf(player))))
+		));
+	}
+
+	public method BoopPlayerInside(player, speed)
+	{
+		while (IsPlayerOutside(player))
+			ApplyImpulse(player, DirectionTowards(PositionOf(player), Vector(
+				Max(XOf(Min), Min(XOf(Max), XOf(PositionOf(player)))),
+				Max(YOf(Min), Min(YOf(Max), YOf(PositionOf(player)))),
+				Max(ZOf(Min), Min(ZOf(Max), ZOf(PositionOf(player))))
+			)), speed, Relative.ToWorld, ContraryMotion.Cancel);
+	}
+
+	public method BoopPlayerOutside(player, speed)
+	{
+		while (IsPlayerInside(player))
+			ApplyImpulse(player, DirectionTowards(Vector(
+				Min(XOf(Min), Max(XOf(Max), XOf(PositionOf(player)))),
+				Min(YOf(Min), Max(YOf(Max), YOf(PositionOf(player)))),
+				Min(ZOf(Min), Max(ZOf(Max), ZOf(PositionOf(player))))
+			), PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
+	}
+
+	public method PlayersInside()
+	{
+		return FilteredArray(AllPlayers(),
+			XOf(Min) > XOf(PositionOf(ArrayElement())) |
+			YOf(Min) > YOf(PositionOf(ArrayElement())) |
+			ZOf(Min) > ZOf(PositionOf(ArrayElement())) |
+			XOf(Max) < XOf(PositionOf(ArrayElement())) |
+			YOf(Max) < YOf(PositionOf(ArrayElement())) |
+			ZOf(Max) < ZOf(PositionOf(ArrayElement()))
+		);
+	}
+
+	public method PlayersOutside()
+	{
+		return FilteredArray(AllPlayers(),
+			XOf(Min) < XOf(PositionOf(ArrayElement())) |
+			YOf(Min) < YOf(PositionOf(ArrayElement())) |
+			ZOf(Min) < ZOf(PositionOf(ArrayElement())) |
+			XOf(Max) > XOf(PositionOf(ArrayElement())) |
+			YOf(Max) > YOf(PositionOf(ArrayElement())) |
+			ZOf(Max) > ZOf(PositionOf(ArrayElement()))
+		);
+	}
+}
