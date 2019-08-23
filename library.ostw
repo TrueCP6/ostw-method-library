@@ -69,25 +69,11 @@ struct Dictionary
 {
 	define Keys;
 	define Values;
+
 	public Dictionary(keys, values)
 	{
 		Keys = keys;
 		Values = values;
-	}
-
-	public method Dictionary()
-	{
-		Keys = EmptyArray();
-		Values = EmptyArray();
-	}
-
-	public method Dictionary(tupleArray)
-	{
-		for (define i = 0; i < CountOf(tupleArray); i++)
-		{
-			Keys[i] = tupleArray[i][0];
-			Values[i] = tupleArray[i][1];
-		}
 	}
 
 	public method GetValueFromKey(key)
