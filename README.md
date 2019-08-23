@@ -4,9 +4,15 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 ## Method List
 - `SumOfArray(arrayToSum)`
 - `AverageOfArray(arrayToAverage)`
-- `TallnessOfHero(hero)` Same as tallness of player, but instead gets the value for a hero.
-- `NearestSolidSurface(point, accuracy)` Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
-- `GenerateForeachArray(length)` Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
+- `TallnessOfHero(hero)`: Same as tallness of player, but instead gets the value for a hero.
+- `NearestSolidSurface(point, accuracy)`: Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
+- `GenerateForeachArray(length)`: Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
+
+## Struct List
+- `Dictionary`: Easy access and editing of Dictionaries with keys associated to values
+- `Trigger`: Activate and deactivate Triggers to sequentialize your rules.
+- `SphericalBarrier`: Create spherical barriers and keep players in and out of them in a number of ways.
+- `CylindricalBarrier`: Same as `SphericalBarrier` except it extends from  Y -∞ to ∞.
 
 ## Downloads
 - [Releases](https://github.com/TrueCP6/ostw-method-library/releases/)
