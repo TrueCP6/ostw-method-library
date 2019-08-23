@@ -179,6 +179,22 @@ struct Trigger
 	{
 		IsActive = False();
 	}
+
+	# Activates the trigger for X seconds
+	public method ActivateFor(seconds)
+	{
+		IsActive = True();
+		Wait(seconds);
+		IsActive = False();
+	}
+
+	# Deactivates the trigger for X seconds
+	public method DeactivateFor(seconds)
+	{
+		IsActive = False();
+		Wait(seconds);
+		IsActive = True();
+	}
 }
 
 struct SphericalBarrier
