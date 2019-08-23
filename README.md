@@ -13,6 +13,7 @@ A method library for [Overwatch Script To Workshop](https://github.com/ItsDeltin
 - `Trigger`: Activate and deactivate Triggers to sequentialize your rules.
 - `SphericalBarrier`: Create spherical barriers and keep players in and out of them in a number of ways.
 - `CylindricalBarrier`: Same as `SphericalBarrier` except it extends from  Y -∞ to ∞.
+- `CuboidBarrier`: Create a barrier from 2 opposite points in the shape of a rectangular prism, cube, etc. Has the same functionality as a normal `Barrier`.
 
 ## Downloads
 - [Releases](https://github.com/TrueCP6/ostw-method-library/releases/)
