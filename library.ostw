@@ -1,5 +1,5 @@
 # Total value of an array
-method SumOfArray(arrayToSum)
+method SumOfArray(define arrayToSum)
 {
 	define total = 0;
 	foreach (define value in arrayToSum)
@@ -10,13 +10,13 @@ method SumOfArray(arrayToSum)
 }
 
 # Average value of an array
-method AverageOfArray(arrayToAverage)
+method AverageOfArray(define arrayToAverage)
 {
 	return SumOfArray(arrayToAverage) / CountOf(arrayToAverage);
 }
 
 # Imperfect way of getting position of nearest solid surface. Accuracy is amount of times looped.
-method NearestSolidSurface(point, accuracy)
+method NearestSolidSurface(define point, define accuracy)
 {
 	define directions = [Up(), Down(), Forward(), Right(), Backward(), Left()];
 	for (define i = 0; i < accuracy; i++)
@@ -29,7 +29,7 @@ method NearestSolidSurface(point, accuracy)
 }
 
 # Gets height of hero measured from eyes to feet
-method TallnessOfHero(hero)
+method TallnessOfHero(define hero)
 {
 	return
 		(hero == Hero.Dva) ? 1.74
@@ -55,7 +55,7 @@ method TallnessOfHero(hero)
 }
 
 # Generates an array of a length where each value is equal to its index. Great for using for Filtered and Sorted arrays.
-method GenerateForeachArray(length)
+method GenerateForeachArray(define length)
 {
 	define returnArray;
 	for (define i = 0; i < length; i++)
@@ -70,32 +70,32 @@ struct Dictionary
 	define Keys;
 	define Values;
 
-	public Dictionary(keys, values)
+	public Dictionary(define keys, define values)
 	{
 		Keys = keys;
 		Values = values;
 	}
 	
 	# Gets the value corresponding to a key
-	public method GetValueFromKey(key)
+	public method GetValueFromKey(define key)
 	{
 		return Values[IndexOfArrayValue(Keys, key)];
 	}
 
 	# Gets the key corresponding to a value
-	public method GetKeyFromValue(value)
+	public method GetKeyFromValue(define value)
 	{
 		return this.Keys[IndexOfArrayValue(Values, value)];
 	}
 
 	# Sets the value corresponding to a key
-	public method SetValueAtKey(key, value)
+	public method SetValueAtKey(define key, define value)
 	{
 		Values[IndexOfArrayValue(Keys, key)] = value;
 	}
 
 	# Sets the key corresponding to a value
-	public method SetKeyAtValue(value, key)
+	public method SetKeyAtValue(define value, define key)
 	{
 		Keys[IndexOfArrayValue(Values, value)] = key;
 	}
@@ -115,7 +115,7 @@ struct Dictionary
 	}
 
 	# Adds a new entry
-	public method AddEntry(key, value)
+	public method AddEntry(define key, define value)
 	{
 		Keys = [Keys, key];
 		Values = [Values, value];
@@ -136,14 +136,14 @@ struct Dictionary
 	}
 
 	# Finds an entry by its key and removes it
-	public method RemoveEntryByKey(key)
+	public method RemoveEntryByKey(define key)
 	{
 		Values = RemoveFromArray(Values, this.GetValueFromKey(key));
 		Keys = RemoveFromArray(Keys, key);
 	}
 
 	# Finds an entry by its value and removes it
-	public method RemoveEntryByValue(value)
+	public method RemoveEntryByValue(define value)
 	{
 		Keys = RemoveFromArray(Keys, this.GetKeyFromValue(value));
 		Values = RemoveFromArray(Values, value);
@@ -181,7 +181,7 @@ struct Trigger
 	}
 
 	# Activates the trigger for X seconds
-	public method ActivateFor(seconds)
+	public method ActivateFor(define seconds)
 	{
 		IsActive = True();
 		Wait(seconds);
@@ -189,7 +189,7 @@ struct Trigger
 	}
 
 	# Deactivates the trigger for X seconds
-	public method DeactivateFor(seconds)
+	public method DeactivateFor(define seconds)
 	{
 		IsActive = False();
 		Wait(seconds);
@@ -202,45 +202,45 @@ struct SphericalBarrier
 	define Position;
 	define Radius;
 
-	public SphericalBarrier(position, radius)
+	public SphericalBarrier(define position, define radius)
 	{
 		Position = position;
 		Radius = radius;
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(player)
+	public method IsPlayerInside(define player)
 	{
 		return DistanceBetween(PositionOf(player), Position) <= Radius;
 	}
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(player)
+	public method IsPlayerOutside(define player)
 	{
 		return DistanceBetween(PositionOf(player), Position) > Radius;
 	}
 
 	# Teleport the player inside the barrier
-	public method TeleportPlayerInside(player)
+	public method TeleportPlayerInside(define player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Position), DistanceBetween(PositionOf(player), Position) - Radius));
 	}
 
 	# Teleports the player outside the barrier
-	public method TeleportPlayerOutside(player)
+	public method TeleportPlayerOutside(define player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(Position, PositionOf(player)), Radius - DistanceBetween(PositionOf(player), Position)));
 	}
 
 	# Boops the player into the barrier
-	public method BoopPlayerInside(player, speed)
+	public method BoopPlayerInside(define player, define speed)
 	{
 		while (IsPlayerOutside(player))
 			ApplyImpulse(player, DirectionTowards(PositionOf(player), Position), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
 	# Boops the player outside the barrier
-	public method BoopPlayerOutside(player, speed)
+	public method BoopPlayerOutside(define player, define speed)
 	{
 		while (IsPlayerInside(player))
 			ApplyImpulse(player, DirectionTowards(Position, PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
@@ -264,45 +264,45 @@ struct CylindricalBarrier
 	define Position;
 	define Radius;
 
-	public CylindricalBarrier(position, radius)
+	public CylindricalBarrier(define position, define radius)
 	{
 		Position = position;
 		Radius = radius;
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(player)
+	public method IsPlayerInside(define player)
 	{
 		return HorizontalDistance(PositionOf(player), Position) <= Radius;
 	}
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(player)
+	public method IsPlayerOutside(define player)
 	{
 		return HorizontalDistance(PositionOf(player), Position) > Radius;
 	}
 
 	# Teleports the player inside the barrier
-	public method TeleportPlayerInside(player)
+	public method TeleportPlayerInside(define player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), HorizontalDistance(PositionOf(player), Position) - Radius));
 	}
 
 	# Teleports the player outside the barrier
-	public method TeleportPlayerOutside(player)
+	public method TeleportPlayerOutside(define player)
 	{
 		Teleport(player, Destination(PositionOf(player), DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), Radius - HorizontalDistance(PositionOf(player), Position)));
 	}
 
 	# Boops the player inside the barrier
-	public method BoopPlayerInside(player, speed)
+	public method BoopPlayerInside(define player, define speed)
 	{
 		while (IsPlayerOutside(player))
 			ApplyImpulse(player, DirectionTowards(PositionOf(player), Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position))), speed, Relative.ToWorld, ContraryMotion.Cancel);
 	}
 
 	# Boops the player outside the barrier
-	public method BoopPlayerOutside(player, speed)
+	public method BoopPlayerOutside(define player, define speed)
 	{
 		while (IsPlayerInside(player))
 			ApplyImpulse(player, DirectionTowards(Vector(XOf(Position), YOf(PositionOf(player)), ZOf(Position)), PositionOf(player)), speed, Relative.ToWorld, ContraryMotion.Cancel);
@@ -326,7 +326,7 @@ struct CuboidBarrier
 	define Min;
 	define Max;
 
-	public CuboidBarrier(corner1, corner2)
+	public CuboidBarrier(define corner1, define corner2)
 	{
 		Min = Vector(
 			Min(XOf(corner1), XOf(corner2)),
@@ -341,7 +341,7 @@ struct CuboidBarrier
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(player)
+	public method IsPlayerInside(define player)
 	{
 		return 
 			XOf(Min) > XOf(PositionOf(player)) |
@@ -354,7 +354,7 @@ struct CuboidBarrier
 	}
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(player)
+	public method IsPlayerOutside(define player)
 	{
 		return 
 			XOf(Min) < XOf(PositionOf(player)) |
@@ -367,7 +367,7 @@ struct CuboidBarrier
 	}
 
 	# Teleports the player inside the barrier
-	public method TeleportPlayerInside(player)
+	public method TeleportPlayerInside(define player)
 	{
 		Teleport(player, Vector(
 			Max(XOf(Min), Min(XOf(Max), XOf(PositionOf(player)))),
@@ -377,7 +377,7 @@ struct CuboidBarrier
 	}
 
 	# Teleports the player outside the barrier
-	public method TeleportPlayerOutside(player)
+	public method TeleportPlayerOutside(define player)
 	{
 		Teleport(player, Vector(
 			Min(XOf(Min), Max(XOf(Max), XOf(PositionOf(player)))),
@@ -387,7 +387,7 @@ struct CuboidBarrier
 	}
 
 	# Boops the player inside the barrier
-	public method BoopPlayerInside(player, speed)
+	public method BoopPlayerInside(define player, define speed)
 	{
 		while (IsPlayerOutside(player))
 			ApplyImpulse(player, DirectionTowards(PositionOf(player), Vector(
@@ -398,7 +398,7 @@ struct CuboidBarrier
 	}
 
 	# Boops the player outside the barrier
-	public method BoopPlayerOutside(player, speed)
+	public method BoopPlayerOutside(define player, define speed)
 	{
 		while (IsPlayerInside(player))
 			ApplyImpulse(player, DirectionTowards(Vector(
