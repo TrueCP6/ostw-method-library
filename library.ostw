@@ -35,17 +35,17 @@ method TallnessOfHero(define hero)
 		(hero == Hero.Dva) ? 1.74
 		: ((hero == Hero.Orisa) ? 1.78
 		: ((hero == Hero.Reinhardt) ? 1.8
-		: ((hero == Hero.Roadhog | hero == Hero.Zarya) ? 1.6
-		: ((hero == Hero.Winston | hero == Hero.Doomfist | hero == Hero.Widowmaker) ? 1.5
+		: ((hero == Hero.Roadhog || hero == Hero.Zarya) ? 1.6
+		: ((hero == Hero.Winston || hero == Hero.Doomfist || hero == Hero.Widowmaker) ? 1.5
 		: ((hero == Hero.WreckingBall) ? 1.83
-		: ((hero == Hero.Ashe | hero == Hero.Mercy) ? 1.45
+		: ((hero == Hero.Ashe || hero == Hero.Mercy) ? 1.45
 		: ((hero == Hero.Bastion) ? 1.82
 		: ((hero == Hero.Genji) ? 1.2
-		: ((hero == Hero.Hanzo | hero == Hero.Pharah | hero == Hero.Baptiste) ? 1.35
-		: ((hero == Hero.Junkrat | hero == Hero.Tracer | hero == Hero.Ana) ? 1.25
+		: ((hero == Hero.Hanzo || hero == Hero.Pharah || hero == Hero.Baptiste) ? 1.35
+		: ((hero == Hero.Junkrat || hero == Hero.Tracer || hero == Hero.Ana) ? 1.25
 		: ((hero == Hero.Mccree) ? 1.43
-		: ((hero == Hero.Mei | hero == Hero.Sombra | hero == Hero.Symmetra) ? 1.3
-		: ((hero == Hero.Reaper | hero == Hero.Soldier76 | hero == Hero.Zenyatta) ? 1.55
+		: ((hero == Hero.Mei || hero == Hero.Sombra || hero == Hero.Symmetra) ? 1.3
+		: ((hero == Hero.Reaper || hero == Hero.Soldier76 || hero == Hero.Zenyatta) ? 1.55
 		: ((hero == Hero.Torbjorn) ? 1
 		: ((hero == Hero.Brigitte) ? 1.58
 		: ((hero == Hero.Lucio) ? 1.17
@@ -85,7 +85,7 @@ struct Dictionary
 	# Gets the key corresponding to a value
 	public method GetKeyFromValue(define value)
 	{
-		return this.Keys[IndexOfArrayValue(Values, value)];
+		return Keys[IndexOfArrayValue(Values, value)];
 	}
 
 	# Sets the value corresponding to a key
@@ -105,7 +105,7 @@ struct Dictionary
 	{
 		for (define i = 0; 0 < CountOf(Keys); i++)
 		{
-			if (EntityExists(Keys[i]) == fa+lse)
+			if (EntityExists(Keys[i]) == false)
 			{
 				RemoveFromArrayAtIndex(Keys, i);
 				RemoveFromArrayAtIndex(Values, i);
@@ -126,7 +126,7 @@ struct Dictionary
 	{
 		for (define i = 0; i < CountOf(Keys); i++)
 		{
-			if (Keys[i] == Null() | Values[i] == Null())
+			if (Keys[i] == Null() || Values[i] == Null())
 			{
 				RemoveFromArrayAtIndex(Keys, i);
 				RemoveFromArrayAtIndex(Values, i);
@@ -344,11 +344,11 @@ struct CuboidBarrier
 	public method IsPlayerInside(define player)
 	{
 		return 
-			XOf(Min) > XOf(PositionOf(player)) |
-			YOf(Min) > YOf(PositionOf(player)) |
-			ZOf(Min) > ZOf(PositionOf(player)) |
-			XOf(Max) < XOf(PositionOf(player)) |
-			YOf(Max) < YOf(PositionOf(player)) |
+			XOf(Min) > XOf(PositionOf(player)) &&
+			YOf(Min) > YOf(PositionOf(player)) &&
+			ZOf(Min) > ZOf(PositionOf(player)) &&
+			XOf(Max) < XOf(PositionOf(player)) &&
+			YOf(Max) < YOf(PositionOf(player)) &&
 			ZOf(Max) < ZOf(PositionOf(player))
 		;
 	}
@@ -357,11 +357,11 @@ struct CuboidBarrier
 	public method IsPlayerOutside(define player)
 	{
 		return 
-			XOf(Min) < XOf(PositionOf(player)) |
-			YOf(Min) < YOf(PositionOf(player)) |
-			ZOf(Min) < ZOf(PositionOf(player)) |
-			XOf(Max) > XOf(PositionOf(player)) |
-			YOf(Max) > YOf(PositionOf(player)) |
+			XOf(Min) < XOf(PositionOf(player)) &&
+			YOf(Min) < YOf(PositionOf(player)) &&
+			ZOf(Min) < ZOf(PositionOf(player)) &&
+			XOf(Max) > XOf(PositionOf(player)) &&
+			YOf(Max) > YOf(PositionOf(player)) &&
 			ZOf(Max) > ZOf(PositionOf(player))
 		;
 	}
@@ -412,11 +412,11 @@ struct CuboidBarrier
 	public method PlayersInside()
 	{
 		return FilteredArray(AllPlayers(),
-			XOf(Min) > XOf(PositionOf(ArrayElement())) |
-			YOf(Min) > YOf(PositionOf(ArrayElement())) |
-			ZOf(Min) > ZOf(PositionOf(ArrayElement())) |
-			XOf(Max) < XOf(PositionOf(ArrayElement())) |
-			YOf(Max) < YOf(PositionOf(ArrayElement())) |
+			XOf(Min) > XOf(PositionOf(ArrayElement())) &&
+			YOf(Min) > YOf(PositionOf(ArrayElement())) &&
+			ZOf(Min) > ZOf(PositionOf(ArrayElement())) &&
+			XOf(Max) < XOf(PositionOf(ArrayElement())) &&
+			YOf(Max) < YOf(PositionOf(ArrayElement())) &&
 			ZOf(Max) < ZOf(PositionOf(ArrayElement()))
 		);
 	}
@@ -425,11 +425,11 @@ struct CuboidBarrier
 	public method PlayersOutside()
 	{
 		return FilteredArray(AllPlayers(),
-			XOf(Min) < XOf(PositionOf(ArrayElement())) |
-			YOf(Min) < YOf(PositionOf(ArrayElement())) |
-			ZOf(Min) < ZOf(PositionOf(ArrayElement())) |
-			XOf(Max) > XOf(PositionOf(ArrayElement())) |
-			YOf(Max) > YOf(PositionOf(ArrayElement())) |
+			XOf(Min) < XOf(PositionOf(ArrayElement())) &&
+			YOf(Min) < YOf(PositionOf(ArrayElement())) &&
+			ZOf(Min) < ZOf(PositionOf(ArrayElement())) &&
+			XOf(Max) > XOf(PositionOf(ArrayElement())) &&
+			YOf(Max) > YOf(PositionOf(ArrayElement())) &&
 			ZOf(Max) > ZOf(PositionOf(ArrayElement()))
 		);
 	}
