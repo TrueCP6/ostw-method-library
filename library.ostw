@@ -209,16 +209,12 @@ struct SphericalBarrier
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(define player)
-	{
-		return DistanceBetween(PositionOf(player), Position) <= Radius;
-	}
+	public macro IsPlayerInside(define player):
+		DistanceBetween(PositionOf(player), Position) <= Radius;
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(define player)
-	{
-		return DistanceBetween(PositionOf(player), Position) > Radius;
-	}
+	public macro IsPlayerOutside(define player):
+		DistanceBetween(PositionOf(player), Position) > Radius;
 
 	# Teleport the player inside the barrier
 	public method TeleportPlayerInside(define player)
@@ -247,16 +243,12 @@ struct SphericalBarrier
 	}
 
 	# An array of the players outside the barrier
-	public method PlayersOutside()
-	{
-		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) > Radius);
-	}
-
-	# And array of the players inside the barrier
-	public method PlayersInside()
-	{
-		return FilteredArray(AllPlayers(), DistanceBetween(PositionOf(ArrayElement()), Position) <= Radius);
-	}
+	public macro PlayersOutside():
+		FilteredArray(AllPlayers(), IsPlayerOutside(ArrayElement()));
+	
+	# An array of the players inside the barrier
+	public macro PlayersInside():
+		FilteredArray(AllPlayers(), IsPlayerInside(ArrayElement()));
 }
 
 struct CylindricalBarrier
@@ -271,15 +263,25 @@ struct CylindricalBarrier
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(define player)
+	public macro IsPlayerInside(define player):
+		HorizontalDistance(PositionOf(player), Position) <= Radius;
+
+	# Whether the player is inside the the barrier. This method can not be used in conditions
+	public method OptimisedIsPlayerInside(define player)
 	{
-		return HorizontalDistance(PositionOf(player), Position) <= Radius;
+		define pos = PositionOf(player);
+		return HorizontalDistance(pos, Position) <= Radius;
 	}
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(define player)
+	public macro IsPlayerOutside(define player):
+		HorizontalDistance(PositionOf(player), Position) > Radius;
+
+	# Whether the player is Outside the the barrier. This method can not be used in conditions
+	public method OptimisedIsPlayerOutside(define player)
 	{
-		return HorizontalDistance(PositionOf(player), Position) > Radius;
+		define pos = PositionOf(player);
+		return HorizontalDistance(pos, Position) > Radius;
 	}
 
 	# Teleports the player inside the barrier
@@ -309,16 +311,12 @@ struct CylindricalBarrier
 	}
 
 	# An array of players inside the barrier
-	public method PlayersInside()
-	{
-		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) <= Radius);
-	}
+	public macro PlayersInside():
+		FilteredArray(AllPlayers(), IsPlayerInside(ArrayElement()));
 
 	# An array of players outside the barrier
-	public method PlayersOutside()
-	{
-		return FilteredArray(AllPlayers(), HorizontalDistance(PositionOf(ArrayElement()), Position) > Radius);
-	}
+	public macro PlayersOutside():
+		FilteredArray(AllPlayers(), IsPlayerOutside(ArrayElement()));
 }
 
 struct CuboidBarrier
@@ -341,28 +339,50 @@ struct CuboidBarrier
 	}
 
 	# Whether the player is inside the the barrier
-	public method IsPlayerInside(define player)
+	public macro IsPlayerInside(define player):
+		XOf(Min) > XOf(PositionOf(player)) &&
+		YOf(Min) > YOf(PositionOf(player)) &&
+		ZOf(Min) > ZOf(PositionOf(player)) &&
+		XOf(Max) < XOf(PositionOf(player)) &&
+		YOf(Max) < YOf(PositionOf(player)) &&
+		ZOf(Max) < ZOf(PositionOf(player))
+	;
+
+	# Whether the player is inside the barrier. This method can not be used in a condition
+	public method OptimisedIsPlayerInside(define player)
 	{
-		return 
-			XOf(Min) > XOf(PositionOf(player)) &&
-			YOf(Min) > YOf(PositionOf(player)) &&
-			ZOf(Min) > ZOf(PositionOf(player)) &&
-			XOf(Max) < XOf(PositionOf(player)) &&
-			YOf(Max) < YOf(PositionOf(player)) &&
-			ZOf(Max) < ZOf(PositionOf(player))
+		define pos = PositionOf(player);
+		return
+			XOf(Min) > XOf(pos) &&
+			YOf(Min) > YOf(pos) &&
+			ZOf(Min) > ZOf(pos) &&
+			XOf(Max) < XOf(pos) &&
+			YOf(Max) < YOf(pos) &&
+			ZOf(Max) < ZOf(pos)
 		;
 	}
 
 	# Whether the player is outside the barrier
-	public method IsPlayerOutside(define player)
+	public macro IsPlayerOutside(define player):
+		XOf(Min) < XOf(PositionOf(player)) &&
+		YOf(Min) < YOf(PositionOf(player)) &&
+		ZOf(Min) < ZOf(PositionOf(player)) &&
+		XOf(Max) > XOf(PositionOf(player)) &&
+		YOf(Max) > YOf(PositionOf(player)) &&
+		ZOf(Max) > ZOf(PositionOf(player))
+	;
+
+	# Whether the player is outside the barrier. This method can not be used in a condition
+	public method OptimisedIsPlayerOutside(define player)
 	{
-		return 
-			XOf(Min) < XOf(PositionOf(player)) &&
-			YOf(Min) < YOf(PositionOf(player)) &&
-			ZOf(Min) < ZOf(PositionOf(player)) &&
-			XOf(Max) > XOf(PositionOf(player)) &&
-			YOf(Max) > YOf(PositionOf(player)) &&
-			ZOf(Max) > ZOf(PositionOf(player))
+		define pos = PositionOf(player);
+		return
+			XOf(Min) < XOf(pos) &&
+			YOf(Min) < YOf(pos) &&
+			ZOf(Min) < ZOf(pos) &&
+			XOf(Max) > XOf(pos) &&
+			YOf(Max) > YOf(pos) &&
+			ZOf(Max) > ZOf(pos)
 		;
 	}
 
@@ -409,28 +429,14 @@ struct CuboidBarrier
 	}
 
 	# An array of players inside the barrier
-	public method PlayersInside()
-	{
-		return FilteredArray(AllPlayers(),
-			XOf(Min) > XOf(PositionOf(ArrayElement())) &&
-			YOf(Min) > YOf(PositionOf(ArrayElement())) &&
-			ZOf(Min) > ZOf(PositionOf(ArrayElement())) &&
-			XOf(Max) < XOf(PositionOf(ArrayElement())) &&
-			YOf(Max) < YOf(PositionOf(ArrayElement())) &&
-			ZOf(Max) < ZOf(PositionOf(ArrayElement()))
+	public macro PlayersInside():
+		FilteredArray(AllPlayers(),
+			IsPlayerInside(ArrayElement())
 		);
-	}
 
 	# An array of players outside the barrier
-	public method PlayersOutside()
-	{
-		return FilteredArray(AllPlayers(),
-			XOf(Min) < XOf(PositionOf(ArrayElement())) &&
-			YOf(Min) < YOf(PositionOf(ArrayElement())) &&
-			ZOf(Min) < ZOf(PositionOf(ArrayElement())) &&
-			XOf(Max) > XOf(PositionOf(ArrayElement())) &&
-			YOf(Max) > YOf(PositionOf(ArrayElement())) &&
-			ZOf(Max) > ZOf(PositionOf(ArrayElement()))
+	public macro PlayersOutside():
+		FilteredArray(AllPlayers(),
+			IsPlayerOutside(ArrayElement())
 		);
-	}
 }
