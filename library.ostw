@@ -59,9 +59,7 @@ method GenerateForeachArray(define length)
 {
 	define returnArray;
 	for (define i = 0; i < length; i++)
-	{
 		returnArray[i] = i;
-	}
 	return returnArray;
 }
 
@@ -337,6 +335,43 @@ struct CuboidBarrier
 			Max(ZOf(corner1), ZOf(corner2))
 		);
 	}
+
+	# Visualises the barrier. Returns an effect array of the beams that can be destroyed with DestroyEffectArray. Has a delay of 0.016 seconds.
+	public method Visualise(define visibleTo)
+	{
+		define effects = [];
+
+		Beam(Min, Vector(XOf(Max), YOf(Min), ZOf(Min)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Min, Vector(XOf(Min), YOf(Max), ZOf(Min)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Min, Vector(XOf(Min), YOf(Min), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Max, Vector(XOf(Min), YOf(Max), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Max, Vector(XOf(Max), YOf(Min), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Max, Vector(XOf(Max), YOf(Max), ZOf(Min)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Min), YOf(Max), ZOf(Min)), Vector(XOf(Max), YOf(Max), ZOf(Min)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Min), YOf(Max), ZOf(Min)), Vector(XOf(Min), YOf(Max), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Min), YOf(Max), ZOf(Max)), Vector(XOf(Min), YOf(Min), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Max), YOf(Max), ZOf(Min)), Vector(XOf(Max), YOf(Min), ZOf(Min)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Min), YOf(Min), ZOf(Max)), Vector(XOf(Max), YOf(Min), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+		Beam(Vector(XOf(Max), YOf(Min), ZOf(Min)), Vector(XOf(Max), YOf(Min), ZOf(Max)), visibleTo);
+		effects = [effects, LastCreatedEntity()];
+
+		MinWait();
+		return effects;
+	}
+
+	private macro Beam(define start, define end, define visible):
+		CreateBeamEffect(visible, BeamType.GrappleBeam, start, end, Color.White, EffectRev.PositionAndRadius);
 
 	# Whether the player is inside the the barrier
 	public macro IsPlayerInside(define player):
