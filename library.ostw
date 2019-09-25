@@ -1,3 +1,5 @@
+import "Pathmaps\Hanamura.pathmap" as Hanamura;
+
 # Total value of an array
 method SumOfArray(define arrayToSum)
 {
