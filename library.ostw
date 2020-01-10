@@ -65,7 +65,7 @@ method GenerateForeachArray(define length)
 	return returnArray;
 }
 
-struct Dictionary 
+class Dictionary 
 {
 	define Keys;
 	define Values;
@@ -159,7 +159,7 @@ struct Dictionary
 	}
 }
 
-struct Trigger
+class Trigger
 {
 	define IsActive;
 
@@ -197,7 +197,7 @@ struct Trigger
 	}
 }
 
-struct SphericalBarrier
+class SphericalBarrier
 {
 	define Position;
 	define Radius;
@@ -251,7 +251,7 @@ struct SphericalBarrier
 		FilteredArray(AllPlayers(), IsPlayerInside(ArrayElement()));
 }
 
-struct CylindricalBarrier
+class CylindricalBarrier
 {
 	define Position;
 	define Radius;
@@ -319,7 +319,7 @@ struct CylindricalBarrier
 		FilteredArray(AllPlayers(), IsPlayerOutside(ArrayElement()));
 }
 
-struct CuboidBarrier
+class CuboidBarrier
 {
 	define Min;
 	define Max;
